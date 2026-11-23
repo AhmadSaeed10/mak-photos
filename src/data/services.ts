@@ -256,8 +256,8 @@ export const services: Service[] = [
         a: 'Yes, where flying is permitted. Many heritage sites restrict drones, so we confirm permissions before the shoot.',
       },
     ],
-    img: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80',
-    hero: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1920&q=80',
+    img: '/images/badshahi-masjid-800.webp',
+    hero: '/images/lahore-fort-1920.webp',
     icon: icon('M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'),
   },
   {

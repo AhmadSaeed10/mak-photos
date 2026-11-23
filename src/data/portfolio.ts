@@ -75,17 +75,30 @@ export const projects: Project[] = [
   },
   {
     slug: 'lahore-fort',
-    title: 'Lahore Fort at Dusk',
+    title: 'Alamgiri Gate, Lahore Fort',
     category: 'heritage',
     summary: 'Heritage documentation',
     story:
-      'Part of ongoing documentation work for the Walled City of Lahore Authority, capturing the fort as the light shifts from gold to blue.',
+      'Part of ongoing documentation work for the Walled City of Lahore Authority. A low, wide frame lets the lotus-based bastions of the Alamgiri Gate rise against a clear monsoon sky.',
     location: 'Lahore Fort',
     coverage: 'Architectural photography',
-    cover: u('1587474260584-136574528ed5', 800),
-    gallery: [u('1587474260584-136574528ed5'), u('1570168007204-dfb528c6958f'), u('1548013146-72479768bada')],
+    cover: '/images/lahore-fort-800.webp',
+    gallery: ['/images/lahore-fort-1920.webp'],
     instagram: [],
     featured: true,
+  },
+  {
+    slug: 'badshahi-masjid',
+    title: 'Badshahi Masjid',
+    category: 'heritage',
+    summary: 'Mughal architecture series',
+    story:
+      'The red sandstone and marble domes of the Badshahi Masjid, framed through one of its own scalloped arches in soft morning haze.',
+    location: 'Badshahi Masjid, Lahore',
+    coverage: 'Architectural photography',
+    cover: '/images/badshahi-masjid-800.webp',
+    gallery: ['/images/badshahi-masjid-1920.webp'],
+    instagram: [],
   },
   {
     slug: 'creative-portraits',
@@ -122,7 +135,7 @@ export const projects: Project[] = [
     location: 'Shalamar Bagh',
     coverage: 'Heritage photography',
     cover: u('1570168007204-dfb528c6958f', 800),
-    gallery: [u('1570168007204-dfb528c6958f'), u('1587474260584-136574528ed5')],
+    gallery: [u('1570168007204-dfb528c6958f')],
     instagram: [],
   },
   {
@@ -158,7 +171,7 @@ export const projects: Project[] = [
     location: 'Walled City, Lahore',
     coverage: 'Documentary photography',
     cover: u('1548013146-72479768bada', 800),
-    gallery: [u('1548013146-72479768bada'), u('1587474260584-136574528ed5')],
+    gallery: [u('1548013146-72479768bada')],
     instagram: [],
   },
   {
