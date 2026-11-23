@@ -5,7 +5,12 @@ interface Props {
 }
 
 const { title, description = "MAK Photos — Professional Photography & Videography by Moazzam Ali Khokhar. Wedding, Fashion, Event & Heritage Photography in Lahore, Pakistan." } = Astro.props;
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+import '../styles/global.css';
+import { site, nav, whatsappLink, instagramDmLink, messengerLink } from '../data/site';
+import { services } from '../data/services';
+const year = new Date().getFullYear();
+const isActive = (href: string) => currentPath === href || (href !== '/' && currentPath.startsWith(href));
 ---
 
 <!DOCTYPE html>
@@ -45,19 +50,14 @@ const currentPath = Astro.url.pathname;
         </a>
 
         <!-- Desktop Nav Links -->
-        <div class="hidden lg:flex items-center gap-10">
-          {[
-            { href: '/', label: 'Home' },
-            { href: '/about', label: 'About' },
-            { href: '/services', label: 'Services' },
-            { href: '/portfolio', label: 'Portfolio' },
-            { href: '/contact', label: 'Contact' },
-          ].map(link => (
+        <div class="hidden lg:flex items-center gap-8 xl:gap-10">
+          {nav.map(link => (
             <a
               href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
               class:list={[
                 "relative text-sm tracking-[0.15em] uppercase transition-colors duration-300 hover:text-brand py-2",
-                currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+                isActive(link.href)
                   ? 'text-brand'
                   : 'text-muted-text'
               ]}
@@ -65,7 +65,7 @@ const currentPath = Astro.url.pathname;
               {link.label}
               <span class:list={[
                 "absolute bottom-0 left-0 h-px bg-brand transition-all duration-500",
-                currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+                isActive(link.href)
                   ? 'w-full'
                   : 'w-0 group-hover:w-full'
               ]} />
@@ -90,13 +90,7 @@ const currentPath = Astro.url.pathname;
 
   <!-- Mobile Navigation -->
   <div class="mobile-nav" id="mobileNav">
-    {[
-      { href: '/', label: 'Home' },
-      { href: '/about', label: 'About' },
-      { href: '/services', label: 'Services' },
-      { href: '/portfolio', label: 'Portfolio' },
-      { href: '/contact', label: 'Contact' },
-    ].map((link, i) => (
+    {nav.map((link, i) => (
       <a
         href={link.href}
         class="font-heading text-4xl lg:text-5xl text-light-text hover:text-brand transition-colors duration-300"
@@ -106,8 +100,9 @@ const currentPath = Astro.url.pathname;
       </a>
     ))}
     <div class="mt-8 flex gap-6">
-      <a href="https://www.instagram.com/_makphotos/" target="_blank" rel="noopener" class="text-muted-text hover:text-brand transition-colors">Instagram</a>
-      <a href="https://www.facebook.com/moazzamaliphotography" target="_blank" rel="noopener" class="text-muted-text hover:text-brand transition-colors">Facebook</a>
+      <a href={whatsappLink()} target="_blank" rel="noopener" class="text-muted-text hover:text-brand transition-colors">WhatsApp</a>
+      <a href={site.instagramUrl} target="_blank" rel="noopener" class="text-muted-text hover:text-brand transition-colors">Instagram</a>
+      <a href={site.facebookUrl} target="_blank" rel="noopener" class="text-muted-text hover:text-brand transition-colors">Facebook</a>
     </div>
   </div>
 
@@ -132,8 +127,8 @@ const currentPath = Astro.url.pathname;
         <div>
           <h4 class="text-xs tracking-[0.2em] uppercase text-brand mb-6">Navigation</h4>
           <div class="flex flex-col gap-3">
-            {['Home', 'About', 'Services', 'Portfolio', 'Contact'].map(link => (
-              <a href={link === 'Home' ? '/' : `/${link.toLowerCase()}`} class="text-sm text-muted-text hover:text-light-text transition-colors duration-300">{link}</a>
+            {nav.map(link => (
+              <a href={link.href} class="text-sm text-muted-text hover:text-light-text transition-colors duration-300">{link.label}</a>
             ))}
           </div>
         </div>
@@ -142,8 +137,8 @@ const currentPath = Astro.url.pathname;
         <div>
           <h4 class="text-xs tracking-[0.2em] uppercase text-brand mb-6">Services</h4>
           <div class="flex flex-col gap-3">
-            {['Wedding Photography', 'Fashion Shoots', 'Event Coverage', 'Portrait Sessions', 'Cinematic Videos'].map(service => (
-              <span class="text-sm text-muted-text">{service}</span>
+            {services.map(service => (
+              <a href={`/services/${service.slug}`} class="text-sm text-muted-text hover:text-light-text transition-colors duration-300">{service.shortTitle}</a>
             ))}
           </div>
         </div>
@@ -152,16 +147,18 @@ const currentPath = Astro.url.pathname;
         <div>
           <h4 class="text-xs tracking-[0.2em] uppercase text-brand mb-6">Get In Touch</h4>
           <div class="flex flex-col gap-3">
-            <span class="text-sm text-muted-text">Lahore, Pakistan</span>
-            <a href="mailto:hello@makphotos.com" class="text-sm text-muted-text hover:text-light-text transition-colors">hello@makphotos.com</a>
+            <span class="text-sm text-muted-text">{site.city}</span>
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="text-sm text-muted-text hover:text-light-text transition-colors">WhatsApp {site.whatsappDisplay}</a>
+            <a href={instagramDmLink} target="_blank" rel="noopener" class="text-sm text-muted-text hover:text-light-text transition-colors">DM @{site.instagramHandle}</a>
+            <a href={messengerLink()} target="_blank" rel="noopener" class="text-sm text-muted-text hover:text-light-text transition-colors">Facebook Messenger</a>
             <div class="flex gap-4 mt-4">
-              <a href="https://www.instagram.com/_makphotos/" target="_blank" rel="noopener" class="w-10 h-10 border border-dark-border flex items-center justify-center text-muted-text hover:border-brand hover:text-brand transition-all duration-300" aria-label="Instagram">
+              <a href={site.instagramUrl} target="_blank" rel="noopener" class="w-10 h-10 border border-dark-border flex items-center justify-center text-muted-text hover:border-brand hover:text-brand transition-all duration-300" aria-label="Instagram">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               </a>
-              <a href="https://www.facebook.com/moazzamaliphotography" target="_blank" rel="noopener" class="w-10 h-10 border border-dark-border flex items-center justify-center text-muted-text hover:border-brand hover:text-brand transition-all duration-300" aria-label="Facebook">
+              <a href={site.facebookUrl} target="_blank" rel="noopener" class="w-10 h-10 border border-dark-border flex items-center justify-center text-muted-text hover:border-brand hover:text-brand transition-all duration-300" aria-label="Facebook">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               </a>
-              <a href="https://www.instagram.com/i.moazzam.ali/" target="_blank" rel="noopener" class="w-10 h-10 border border-dark-border flex items-center justify-center text-muted-text hover:border-brand hover:text-brand transition-all duration-300" aria-label="Personal Instagram">
+              <a href={site.personalInstagramUrl} target="_blank" rel="noopener" class="w-10 h-10 border border-dark-border flex items-center justify-center text-muted-text hover:border-brand hover:text-brand transition-all duration-300" aria-label="Personal Instagram">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-6C8.69 6 6 8.69 6 12s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
               </a>
             </div>
@@ -171,7 +168,7 @@ const currentPath = Astro.url.pathname;
 
       <!-- Bottom bar -->
       <div class="mt-16 pt-8 border-t border-dark-border flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="text-xs text-muted-text tracking-wider">&copy; 2024 MAK Photos. All rights reserved.</p>
+        <p class="text-xs text-muted-text tracking-wider">&copy; {year} MAK Photos. All rights reserved.</p>
         <p class="text-xs text-muted-text tracking-wider">Crafted with passion in Lahore, Pakistan</p>
       </div>
     </div>
@@ -183,7 +180,7 @@ const currentPath = Astro.url.pathname;
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader')?.classList.add('hidden');
-      }, 2000);
+      }, 600);
     });
 
     // Custom cursor

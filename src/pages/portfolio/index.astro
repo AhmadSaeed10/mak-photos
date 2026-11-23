@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import InstagramEmbeds from '../../components/InstagramEmbeds.astro';
+import { projects } from '../../data/portfolio';
+import { categoryLabels, type Category } from '../../data/services';
+import { site } from '../../data/site';
+
+const cats = Object.keys(categoryLabels) as Category[];
+const counts = Object.fromEntries(cats.map((c) => [c, projects.filter((p) => p.category === c).length]));
+// Latest Instagram posts: first linked post of each project, newest projects first.
+const latest = projects.flatMap((p) => p.instagram.slice(0, 1)).slice(0, 6);
+---
+<Layout title="Portfolio | MAK Photos - Selected Work" description="Weddings, fashion editorials, heritage documentation, portraits, events and films by MAK Photos, Lahore.">
+  <PageHero eyebrow="Selected Work" title="Our" accent="Portfolio" image="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1920&q=80" />
+
+  <!-- Filters -->
+  <section class="py-6 px-6 lg:px-12 border-b border-dark-border sticky top-20 lg:top-24 bg-dark/95 backdrop-blur-md z-20">
+    <div class="max-w-7xl mx-auto flex gap-3 overflow-x-auto lg:flex-wrap lg:justify-center pb-1 -mx-6 px-6 lg:mx-0 lg:px-0" role="group" aria-label="Filter projects by category">
+      <button type="button" class="portfolio-filter flex-shrink-0 px-5 py-2 text-xs tracking-[0.2em] uppercase border transition-all duration-300" data-filter="all" aria-pressed="true">
+        All <span class="opacity-60">({projects.length})</span>
+      </button>
+      {cats.map((c) => (
+        <button type="button" class="portfolio-filter flex-shrink-0 px-5 py-2 text-xs tracking-[0.2em] uppercase border transition-all duration-300" data-filter={c} aria-pressed="false">
+          {categoryLabels[c]} <span class="opacity-60">({counts[c]})</span>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto">
+      <p class="sr-only" aria-live="polite" id="filter-status"></p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="portfolio-grid">
+        {projects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram -->
+  <section class="py-24 lg:py-32 px-6 lg:px-12 bg-dark-card border-t border-dark-border">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 reveal">
+        <div>
+          <span class="text-brand text-xs tracking-[0.3em] uppercase">Fresh From The Feed</span>
+          <h2 class="font-heading text-3xl lg:text-5xl mt-4">Latest on <span class="text-brand italic">Instagram</span></h2>
+        </div>
+        <a href={site.instagramUrl} target="_blank" rel="noopener" class="text-brand text-sm tracking-[0.15em] uppercase hover:underline underline-offset-8">@{site.instagramHandle}</a>
+      </div>
+      {latest.length > 0 ? (
+        <InstagramEmbeds urls={latest} />
+      ) : (
+        <a href={site.instagramUrl} target="_blank" rel="noopener" class="block p-12 text-center border border-dashed border-dark-border hover:border-brand transition-colors">
+          <span class="font-heading text-2xl">See the full feed on Instagram</span>
+          <span class="block text-muted-text text-sm mt-2">New weddings, editorials and behind-the-scenes every week</span>
+        </a>
+      )}
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Like What You See?" title="Let's Create Your" accent="Vision" text="Every project here started with a conversation. Ready to start yours?" />
+</Layout>
+
+<script>
+  const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('.portfolio-filter'));
+  const items = Array.from(document.querySelectorAll<HTMLElement>('#portfolio-grid .portfolio-item'));
+  const status = document.getElementById('filter-status');
+
+  const apply = (filter: string, push = true) => {
+    if (!filters.some((f) => f.dataset.filter === filter)) filter = 'all';
+    filters.forEach((f) => {
+      const on = f.dataset.filter === filter;
+      f.setAttribute('aria-pressed', String(on));
+      f.classList.toggle('bg-brand', on);
+      f.classList.toggle('text-dark', on);
+      f.classList.toggle('border-brand', on);
+      f.classList.toggle('border-dark-border', !on);
+      f.classList.toggle('text-muted-text', !on);
+    });
+    let shown = 0;
+    items.forEach((item) => {
+      const match = filter === 'all' || item.dataset.category === filter;
+      item.hidden = !match;
+      if (match) {
+        shown++;
+        item.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 400, easing: 'ease-out' });
+      }
+    });
+    if (status) status.textContent = `${shown} project${shown === 1 ? '' : 's'} shown`;
+    if (push) {
+      const url = new URL(location.href);
+      filter === 'all' ? url.searchParams.delete('category') : url.searchParams.set('category', filter);
+      history.replaceState(null, '', url);
+    }
+  };
+
+  filters.forEach((f) => f.addEventListener('click', () => apply(f.dataset.filter || 'all')));
+  apply(new URL(location.href).searchParams.get('category') || 'all', false);
+</script>

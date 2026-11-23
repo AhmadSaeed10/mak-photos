@@ -19,13 +19,14 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--color-brand) var(--color-dark);
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-body);
   background-color: var(--color-dark);
   color: var(--color-light-text);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Selection */
@@ -306,3 +307,18 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children > *, .split-text span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .marquee-track, .loader-bar-fill { animation: none !important; }
+  .line-reveal { width: 100%; transition: none; }
+}
+
+/* Lightbox counter sits below the image */
+.lightbox figure img { max-width: 90vw; max-height: 80vh; object-fit: contain; }

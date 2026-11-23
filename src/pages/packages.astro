@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import FaqList from '../components/FaqList.astro';
+import { packageGroups, addOns, pricingFaqs, formatPrice } from '../data/packages';
+import { whatsappLink } from '../data/site';
+---
+<Layout title="Packages & Pricing | MAK Photos Lahore" description="Wedding, portrait, fashion and event photography packages from MAK Photos in Lahore.">
+  <PageHero eyebrow="Packages & Pricing" title="Choose Your" accent="Coverage" image="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1920&q=80" />
+
+  <section class="py-20 px-6 lg:px-12">
+    <div class="max-w-3xl mx-auto text-center reveal">
+      <p class="text-muted-text text-lg leading-relaxed">
+        Clear starting points for the work we do most. Every package can be tailored, so if you don't see exactly what you need, message us and we'll build it with you.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <section class="px-6 lg:px-12 pb-24 lg:pb-32">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex gap-2 overflow-x-auto justify-start sm:justify-center mb-14 -mx-6 px-6 sm:mx-0 sm:px-0" role="tablist" aria-label="Package type">
+        {packageGroups.map((g, i) => (
+          <button type="button" role="tab" id={`tab-${g.id}`} aria-controls={g.id} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}
+            class="pkg-tab flex-shrink-0 px-6 py-3 text-xs tracking-[0.2em] uppercase border transition-all duration-300 aria-selected:bg-brand aria-selected:text-dark aria-selected:border-brand border-dark-border text-muted-text hover:border-brand">
+            {g.label}
+          </button>
+        ))}
+      </div>
+
+      {packageGroups.map((g, i) => (
+        <div role="tabpanel" id={g.id} aria-labelledby={`tab-${g.id}`} class="pkg-panel scroll-mt-40" hidden={i !== 0}>
+          <p class="text-center text-muted-text mb-12 max-w-2xl mx-auto">{g.intro}</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {g.packages.map((p) => (
+              <article class:list={["relative flex flex-col p-8 lg:p-10 bg-dark-card border", p.popular ? "border-brand lg:-translate-y-3" : "border-dark-border"]}>
+                {p.popular && <span class="absolute -top-3 left-8 text-[10px] tracking-[0.2em] uppercase text-dark bg-brand px-3 py-1">Most Booked</span>}
+                <h3 class="font-heading text-2xl">{p.name}</h3>
+                <p class="text-sm text-muted-text mt-2">{p.blurb}</p>
+                <div class="mt-8 pb-8 border-b border-dark-border">
+                  {p.price !== null && <span class="block text-xs tracking-[0.2em] uppercase text-muted-text">From</span>}
+                  <span class="font-heading text-3xl lg:text-4xl text-brand">{formatPrice(p.price)}</span>
+                  <span class="block text-xs tracking-wider uppercase text-muted-text mt-1">{p.unit}</span>
+                </div>
+                <ul class="mt-8 space-y-3 flex-1">
+                  {p.includes.map((x) => (
+                    <li class="flex items-start gap-3 text-sm text-muted-text">
+                      <svg class="w-4 h-4 mt-0.5 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+                <a href={whatsappLink(`Hi MAK Photos, I'm interested in the ${g.label} "${p.name}" package. Is my date available?`)} target="_blank" rel="noopener"
+                  class:list={["mt-10 inline-flex items-center justify-center gap-3 px-6 py-4 text-xs tracking-[0.2em] uppercase transition-all duration-500", p.popular ? "bg-brand text-dark hover:bg-brand-light font-medium" : "border border-brand text-brand hover:bg-brand hover:text-dark"]}>
+                  {p.price === null ? 'Request a Quote' : 'Book This Package'}
+                </a>
+              </article>
+            ))}
+          </div>
+          <p class="text-center mt-10">
+            <a href={`/services/${g.serviceSlug}`} class="text-brand text-xs tracking-[0.2em] uppercase hover:underline underline-offset-8">What's included in {g.label.toLowerCase()} coverage</a>
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Add-ons -->
+  <section class="py-24 px-6 lg:px-12 bg-dark-card border-y border-dark-border">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div class="reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">Extras</span>
+        <h2 class="font-heading text-3xl lg:text-4xl mt-4">Add-<span class="text-brand italic">ons</span></h2>
+        <p class="text-muted-text text-sm mt-4">Add to any package.</p>
+      </div>
+      <dl class="lg:col-span-2 divide-y divide-dark-border border-y border-dark-border reveal">
+        {addOns.map((a) => (
+          <div class="flex items-center justify-between gap-6 py-4">
+            <dt class="text-light-text">{a.name}</dt>
+            <dd class="text-brand font-heading text-lg whitespace-nowrap">{a.price === null ? 'On request' : `+ ${formatPrice(a.price)}`}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="py-24 lg:py-32 px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-12 reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">Good to Know</span>
+        <h2 class="font-heading text-3xl lg:text-5xl mt-4">Booking <span class="text-brand italic">questions</span></h2>
+      </div>
+      <div class="reveal"><FaqList faqs={pricingFaqs} /></div>
+    </div>
+  </section>
+
+  <CtaBand eyebrow="Need Something Custom?" title="Let's Build Your" accent="Package" />
+</Layout>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.pkg-tab'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('.pkg-panel'));
+  const select = (i: number, focus = false) => {
+    tabs.forEach((t, j) => {
+      const on = i === j;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      panels[j].hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => {
+      select(i);
+      history.replaceState(null, '', `#${panels[i].id}`);
+    });
+    t.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') select((i + 1) % tabs.length, true);
+      if (e.key === 'ArrowLeft') select((i - 1 + tabs.length) % tabs.length, true);
+    });
+  });
+  const fromHash = panels.findIndex((p) => `#${p.id}` === location.hash);
+  if (fromHash > 0) select(fromHash);
+</script>

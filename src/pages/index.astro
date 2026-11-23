@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import ProjectCard from '../components/ProjectCard.astro';
+import { services } from '../data/services';
+import { projects } from '../data/portfolio';
+const featured = projects.filter((p) => p.featured).slice(0, 6);
 ---
 
 <Layout title="MAK Photos | Professional Photography & Videography in Lahore">
@@ -144,54 +147,17 @@ import '../styles/global.css';
 
       <!-- Services Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
-        {[
-          {
-            title: "Wedding Photography",
-            desc: "From the intimate Mehndi ceremony to the grand Barat and Walima, we capture every emotion, every detail, every unforgettable moment of your special day.",
-            icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>`,
-            count: "01"
-          },
-          {
-            title: "Fashion Photography",
-            desc: "High-end fashion shoots that bring out the personality of every outfit and model. Editorial, catalog, and lookbook photography tailored to your brand vision.",
-            icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>`,
-            count: "02"
-          },
-          {
-            title: "Cinematic Videography",
-            desc: "Cinematic wedding films, promotional videos, and event highlights that tell your story with the drama and emotion it deserves.",
-            icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
-            count: "03"
-          },
-          {
-            title: "Portrait Sessions",
-            desc: "Professional headshots, personal branding, and creative portrait sessions that reveal the authentic you. Studio and outdoor options available.",
-            icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
-            count: "04"
-          },
-          {
-            title: "Event Coverage",
-            desc: "Corporate events, concerts, celebrations, and cultural gatherings. We ensure no moment goes uncaptured with comprehensive event documentation.",
-            icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
-            count: "05"
-          },
-          {
-            title: "Heritage Documentation",
-            desc: "As a photographer at the Walled City of Lahore Authority, Moazzam specializes in architectural and cultural heritage photography that preserves history.",
-            icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>`,
-            count: "06"
-          }
-        ].map(service => (
-          <div class="group p-8 lg:p-10 bg-dark-card border border-dark-border hover:border-brand/40 transition-all duration-500 relative overflow-hidden">
-            <div class="absolute top-6 right-6 font-heading text-6xl text-dark-border/50 group-hover:text-brand/10 transition-colors duration-500">{service.count}</div>
+        {services.map(service => (
+          <a href={`/services/${service.slug}`} class="group block p-8 lg:p-10 bg-dark-card border border-dark-border hover:border-brand/40 focus-visible:border-brand transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-6 right-6 font-heading text-6xl text-dark-border/50 group-hover:text-brand/10 transition-colors duration-500">{service.num}</div>
             <div class="text-brand mb-6 group-hover:scale-110 transition-transform duration-500" set:html={service.icon} />
-            <h3 class="font-heading text-xl mb-4 group-hover:text-brand transition-colors duration-300">{service.title}</h3>
-            <p class="text-sm text-muted-text leading-relaxed">{service.desc}</p>
-            <div class="mt-6 flex items-center gap-2 text-brand text-xs tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <h3 class="font-heading text-xl mb-4 group-hover:text-brand transition-colors duration-300">{service.shortTitle}</h3>
+            <p class="text-sm text-muted-text leading-relaxed">{service.summary}</p>
+            <div class="mt-6 flex items-center gap-2 text-brand text-xs tracking-widest uppercase lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-visible:opacity-100 transition-opacity duration-500">
               <span>Learn More</span>
               <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </div>
-          </div>
+          </a>
         ))}
       </div>
 
@@ -222,23 +188,7 @@ import '../styles/global.css';
 
       <!-- Portfolio Grid -->
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
-        {[
-          { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80", cat: "Wedding", title: "Naina's Barat Ceremony" },
-          { src: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80", cat: "Fashion", title: "Editorial Fashion Shoot" },
-          { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80", cat: "Wedding", title: "Bunny & Sahar Wedding" },
-          { src: "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?w=600&q=80", cat: "Heritage", title: "Lahore Fort at Dusk" },
-          { src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80", cat: "Portrait", title: "Creative Portrait Series" },
-          { src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80", cat: "Event", title: "Grand Celebration Coverage" },
-        ].map(item => (
-          <div class="group relative img-zoom aspect-[4/5] cursor-pointer">
-            <img src={item.src} alt={item.title} class="w-full h-full object-cover" loading="lazy" />
-            <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-              <span class="text-brand text-xs tracking-[0.2em] uppercase">{item.cat}</span>
-              <h3 class="font-heading text-xl mt-1">{item.title}</h3>
-            </div>
-          </div>
-        ))}
+        {featured.map(p => <ProjectCard project={p} />)}
       </div>
     </div>
   </section>
