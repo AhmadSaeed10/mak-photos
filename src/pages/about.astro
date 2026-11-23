@@ -24,7 +24,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="reveal-left">
         <div class="relative">
           <div class="img-zoom aspect-[3/4] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Moazzam Ali Khokhar" class="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/moazzam-ali-khokhar-1920.webp" alt="Moazzam Ali Khokhar" class="w-full h-full object-cover" loading="lazy" />
           </div>
           <div class="absolute -bottom-6 -right-6 w-48 h-48 border border-brand/20"></div>
           <div class="absolute -top-6 -left-6 w-24 h-24 bg-brand/10"></div>
@@ -137,9 +137,9 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 stagger-children">
         {[
-          { src: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80", title: "Lahore Fort", desc: "UNESCO World Heritage Site" },
+          { src: "/images/lahore-fort-800.webp", title: "Lahore Fort", desc: "UNESCO World Heritage Site" },
           { src: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80", title: "Shalamar Bagh", desc: "Mughal-era Garden Complex" },
-          { src: "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80", title: "Walled City Streets", desc: "Living Heritage of Lahore" },
+          { src: "/images/badshahi-masjid-800.webp", title: "Badshahi Masjid", desc: "Mughal-era Imperial Mosque" },
         ].map(place => (
           <div class="group relative img-zoom aspect-[4/5] overflow-hidden cursor-pointer">
             <img src={place.src} alt={place.title} class="w-full h-full object-cover" loading="lazy" />
