@@ -1,9 +1,9 @@
 /**
  * PACKAGES & PRICING
  *
- * IMPORTANT: prices below are indicative placeholders. Confirm or replace
- * every figure before going live. Set `price` to null to show
- * "Custom quote" instead of a number.
+ * Prices are hidden: every package shows "Custom quote" and add-ons show
+ * "On request". To publish a price later, set `price` to a number
+ * (e.g. price: 75000) and it renders as "From PKR 75,000".
  */
 
 export interface Package {
@@ -34,14 +34,14 @@ export const packageGroups: PackageGroup[] = [
     packages: [
       {
         name: 'Essential',
-        price: 75000,
+        price: null,
         unit: 'per event',
         blurb: 'One event, beautifully covered.',
         includes: ['1 photographer', 'Up to 6 hours coverage', '400+ edited photos', 'Online gallery', 'Sneak peek in 48 hours'],
       },
       {
         name: 'Signature',
-        price: 220000,
+        price: null,
         unit: '3 events',
         blurb: 'Our most booked package for full weddings.',
         includes: [
@@ -56,7 +56,7 @@ export const packageGroups: PackageGroup[] = [
       },
       {
         name: 'Luxe',
-        price: 400000,
+        price: null,
         unit: 'up to 5 events',
         blurb: 'Full team, every ritual, cinematic storytelling.',
         includes: [
@@ -78,14 +78,14 @@ export const packageGroups: PackageGroup[] = [
     packages: [
       {
         name: 'Headshot',
-        price: 15000,
+        price: null,
         unit: 'per session',
         blurb: 'Quick, polished and professional.',
         includes: ['45 minute session', '1 look', '5 retouched images', 'Delivery in 5 working days'],
       },
       {
         name: 'Personal Brand',
-        price: 35000,
+        price: null,
         unit: 'per session',
         blurb: 'A full image library for your brand.',
         includes: ['2 hour session', 'Up to 3 looks', '20 retouched images', '1 location plus studio', 'Social media crops'],
@@ -108,14 +108,14 @@ export const packageGroups: PackageGroup[] = [
     packages: [
       {
         name: 'Half Day',
-        price: 45000,
+        price: null,
         unit: 'up to 4 hours',
         blurb: 'Launches, lookbooks and short events.',
         includes: ['1 photographer', 'Basic lighting kit', '60+ edited images', 'Commercial usage license'],
       },
       {
         name: 'Full Day',
-        price: 80000,
+        price: null,
         unit: 'up to 9 hours',
         blurb: 'Campaigns, catalogs and full events.',
         includes: ['Photographer and assistant', 'Studio or location lighting', '150+ edited images', 'Creative direction', 'Commercial usage license'],
@@ -133,11 +133,11 @@ export const packageGroups: PackageGroup[] = [
 ];
 
 export const addOns = [
-  { name: 'Drone coverage', price: 20000 },
-  { name: 'Second photographer', price: 25000 },
-  { name: 'Additional event (wedding)', price: 60000 },
-  { name: 'Same-day highlight reel', price: 30000 },
-  { name: 'Extra album (30 pages)', price: 35000 },
+  { name: 'Drone coverage', price: null },
+  { name: 'Second photographer', price: null },
+  { name: 'Additional event (wedding)', price: null },
+  { name: 'Same-day highlight reel', price: null },
+  { name: 'Extra album (30 pages)', price: null },
   { name: 'Travel outside Lahore', price: null },
 ];
 
