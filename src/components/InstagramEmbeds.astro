@@ -1,0 +1,21 @@
+---
+// Renders Instagram's official embed for each post/reel URL.
+// The embed script is loaded once, only on pages that use this component.
+interface Props { urls: string[]; columns?: 2 | 3 }
+const { urls, columns = 3 } = Astro.props;
+const clean = (u: string) => u.split('?')[0].replace(/\/?$/, '/');
+---
+{urls.length > 0 && (
+  <>
+    <div class:list={["grid grid-cols-1 gap-6 items-start", columns === 3 ? "md:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-2"]}>
+      {urls.map((url) => (
+        <div class="ig-embed bg-dark-card border border-dark-border min-h-[420px]">
+          <blockquote class="instagram-media" data-instgrm-permalink={`${clean(url)}?utm_source=ig_embed`} data-instgrm-version="14" style="background:#141414;border:0;margin:0;max-width:100%;min-width:0;width:100%;">
+            <a href={clean(url)} target="_blank" rel="noopener" class="flex items-center justify-center h-[420px] text-muted-text text-sm hover:text-brand">View this post on Instagram</a>
+          </blockquote>
+        </div>
+      ))}
+    </div>
+    <script is:inline async src="https://www.instagram.com/embed.js"></script>
+  </>
+)}

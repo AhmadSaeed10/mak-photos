@@ -1,0 +1,84 @@
+---
+// Image gallery with an accessible lightbox: next/prev, arrow keys, Esc, swipe.
+interface Props { images: { src: string; alt: string }[]; id?: string }
+const { images, id = 'gallery' } = Astro.props;
+const large = (s: string) => s.replace(/w=\d+/, 'w=1800');
+---
+<div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [&>*]:mb-4" data-gallery={id}>
+  {images.map((img, i) => (
+    <button type="button" class="gallery-thumb group block w-full img-zoom relative break-inside-avoid focus-visible:outline-2 focus-visible:outline-brand" data-index={i} data-full={large(img.src)} aria-label={`Open image ${i + 1} of ${images.length}: ${img.alt}`}>
+      <img src={img.src} alt={img.alt} class="w-full h-auto object-cover" loading="lazy" />
+      <span class="absolute inset-0 bg-dark/0 group-hover:bg-dark/20 transition-colors duration-500"></span>
+    </button>
+  ))}
+</div>
+
+<div class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" data-lightbox={id} hidden>
+  <button type="button" class="lb-close absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center text-light-text hover:text-brand" aria-label="Close">
+    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <button type="button" class="lb-prev absolute left-2 lg:left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center border border-dark-border bg-dark/60 text-light-text hover:text-brand hover:border-brand" aria-label="Previous image">
+    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+  <figure class="flex flex-col items-center">
+    <img class="lb-img" src="" alt="" />
+    <figcaption class="lb-count mt-4 text-xs tracking-[0.3em] uppercase text-muted-text"></figcaption>
+  </figure>
+  <button type="button" class="lb-next absolute right-2 lg:right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center border border-dark-border bg-dark/60 text-light-text hover:text-brand hover:border-brand" aria-label="Next image">
+    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((grid) => {
+    const id = grid.dataset.gallery;
+    const box = document.querySelector<HTMLElement>(`[data-lightbox="${id}"]`);
+    if (!box) return;
+    const thumbs = Array.from(grid.querySelectorAll<HTMLButtonElement>('.gallery-thumb'));
+    const img = box.querySelector<HTMLImageElement>('.lb-img')!;
+    const count = box.querySelector<HTMLElement>('.lb-count')!;
+    const closeBtn = box.querySelector<HTMLButtonElement>('.lb-close')!;
+    let current = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      current = (i + thumbs.length) % thumbs.length;
+      const t = thumbs[current];
+      img.src = t.dataset.full || '';
+      img.alt = t.querySelector('img')?.alt || '';
+      count.textContent = `${current + 1} / ${thumbs.length}`;
+    };
+    const open = (i: number, from: HTMLElement) => {
+      opener = from;
+      show(i);
+      box.hidden = false;
+      requestAnimationFrame(() => box.classList.add('active'));
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+    const close = () => {
+      box.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => (box.hidden = true), 300);
+      opener?.focus();
+    };
+
+    thumbs.forEach((t, i) => t.addEventListener('click', () => open(i, t)));
+    closeBtn.addEventListener('click', close);
+    box.querySelector('.lb-prev')!.addEventListener('click', () => show(current - 1));
+    box.querySelector('.lb-next')!.addEventListener('click', () => show(current + 1));
+    box.addEventListener('click', (e) => { if (e.target === box) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (box.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+    let startX = 0;
+    box.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+    box.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    });
+  });
+</script>

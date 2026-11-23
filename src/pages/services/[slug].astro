@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import FaqList from '../../components/FaqList.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { services, type Service } from '../../data/services';
+import { projectsByCategory } from '../../data/portfolio';
+import { packageGroups, formatPrice } from '../../data/packages';
+import { whatsappLink } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props as { service: Service };
+const work = projectsByCategory(service.category).slice(0, 3);
+const group = packageGroups.find((g) => g.serviceSlug === service.slug);
+const idx = services.findIndex((s) => s.slug === service.slug);
+const next = services[(idx + 1) % services.length];
+const others = services.filter((s) => s.slug !== service.slug);
+const enquiry = `Hi MAK Photos, I'm interested in ${service.shortTitle}. Could you share availability and details?`;
+---
+<Layout title={`${service.title} | MAK Photos Lahore`} description={service.summary}>
+  <PageHero
+    eyebrow={service.tagline}
+    title={service.shortTitle}
+    image={service.hero}
+    crumbs={[{ href: '/', label: 'Home' }, { href: '/services', label: 'Services' }]}
+  />
+
+  <!-- Overview -->
+  <section class="py-24 lg:py-32 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <div class="lg:col-span-7 reveal-left">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">Service {service.num}</span>
+        <h2 class="font-heading text-3xl lg:text-5xl mt-4 mb-8 leading-tight">{service.title}</h2>
+        <div class="space-y-5 text-muted-text leading-relaxed text-lg">
+          <p>{service.desc}</p>
+          {service.intro.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <aside class="lg:col-span-5 reveal-right">
+        <div class="lg:sticky lg:top-32 p-8 bg-dark-card border border-dark-border">
+          <h3 class="font-heading text-xl mb-6">At a glance</h3>
+          <dl class="divide-y divide-dark-border">
+            {service.deliverables.map((d) => (
+              <div class="flex justify-between gap-6 py-3 text-sm">
+                <dt class="text-muted-text">{d.label}</dt>
+                <dd class="text-light-text text-right">{d.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <h4 class="text-xs tracking-[0.2em] uppercase text-brand mt-8 mb-3">Ideal for</h4>
+          <ul class="space-y-2 text-sm text-muted-text">
+            {service.idealFor.map((x) => <li class="flex gap-3"><span class="text-brand">•</span>{x}</li>)}
+          </ul>
+          <a href={whatsappLink(enquiry)} target="_blank" rel="noopener" class="mt-8 w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-brand text-dark text-xs tracking-[0.2em] uppercase font-medium hover:bg-brand-light transition-all duration-500">
+            Check Availability
+          </a>
+          <a href="/contact" class="mt-3 w-full inline-flex items-center justify-center px-6 py-4 border border-dark-border text-muted-text text-xs tracking-[0.2em] uppercase hover:border-brand hover:text-brand transition-all duration-500">
+            Instagram or Messenger
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- What's included -->
+  <section class="py-24 px-6 lg:px-12 bg-dark-card border-y border-dark-border">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-14 reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">What's Included</span>
+        <h2 class="font-heading text-3xl lg:text-5xl mt-4">Everything you <span class="text-brand italic">need</span></h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-dark-border border border-dark-border stagger-children">
+        {service.features.map((f, i) => (
+          <div class="bg-dark-card p-6 lg:p-8">
+            <span class="font-heading text-brand/40 text-sm">{String(i + 1).padStart(2, '0')}</span>
+            <p class="mt-3 text-light-text">{f}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  {group && (
+    <section class="py-24 lg:py-32 px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 reveal">
+          <div>
+            <span class="text-brand text-xs tracking-[0.3em] uppercase">Packages</span>
+            <h2 class="font-heading text-3xl lg:text-5xl mt-4">Starting <span class="text-brand italic">points</span></h2>
+          </div>
+          <a href={`/packages#${group.id}`} class="text-brand text-sm tracking-[0.15em] uppercase hover:underline underline-offset-8">Full package details</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+          {group.packages.map((p) => (
+            <div class:list={["p-8 border bg-dark-card", p.popular ? "border-brand" : "border-dark-border"]}>
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading text-2xl">{p.name}</h3>
+                {p.popular && <span class="text-[10px] tracking-[0.2em] uppercase text-dark bg-brand px-2 py-1">Popular</span>}
+              </div>
+              <p class="mt-4 font-heading text-2xl text-brand">{p.price === null ? 'Custom quote' : <>From {formatPrice(p.price)}</>}</p>
+              <p class="text-xs text-muted-text tracking-wider uppercase mt-1">{p.unit}</p>
+              <p class="text-sm text-muted-text mt-4">{p.blurb}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Related work -->
+  {work.length > 0 && (
+    <section class="py-24 lg:py-32 px-6 lg:px-12 bg-dark-card">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 reveal">
+          <div>
+            <span class="text-brand text-xs tracking-[0.3em] uppercase">Selected Work</span>
+            <h2 class="font-heading text-3xl lg:text-5xl mt-4">Recent <span class="text-brand italic">projects</span></h2>
+          </div>
+          <a href={`/portfolio?category=${service.category}`} class="text-brand text-sm tracking-[0.15em] uppercase hover:underline underline-offset-8">View all {service.shortTitle.toLowerCase()} work</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 stagger-children">
+          {work.map((p) => <ProjectCard project={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ -->
+  <section class="py-24 lg:py-32 px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-12 reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">Questions</span>
+        <h2 class="font-heading text-3xl lg:text-5xl mt-4">Frequently <span class="text-brand italic">asked</span></h2>
+      </div>
+      <div class="reveal"><FaqList faqs={service.faqs} /></div>
+    </div>
+  </section>
+
+  <!-- Other services -->
+  <section class="py-20 px-6 lg:px-12 border-t border-dark-border">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="font-heading text-2xl">Other services</h2>
+        <a href={`/services/${next.slug}`} class="text-brand text-xs tracking-[0.2em] uppercase hover:underline underline-offset-8">Next: {next.shortTitle}</a>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        {others.map((s) => (
+          <a href={`/services/${s.slug}`} class="group p-5 bg-dark-card border border-dark-border hover:border-brand transition-all duration-300">
+            <div class="text-brand mb-3" set:html={s.icon} />
+            <span class="text-sm text-muted-text group-hover:text-light-text transition-colors">{s.shortTitle}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Ready to Book" accent={`${service.shortTitle}?`} message={enquiry} image={service.hero} />
+</Layout>

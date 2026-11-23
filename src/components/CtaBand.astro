@@ -1,0 +1,41 @@
+---
+import { whatsappLink } from '../data/site';
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  accent?: string;
+  text?: string;
+  message?: string;
+  image?: string;
+}
+const {
+  eyebrow = "Let's Get Started",
+  title = 'Have a Project in',
+  accent = 'Mind?',
+  text = "Tell us about your plans and we'll put together coverage that fits. We usually reply within a few hours.",
+  message = "Hi MAK Photos, I'd like to discuss a shoot.",
+  image = 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=1920&q=80',
+} = Astro.props;
+---
+<section class="relative py-28 lg:py-36 overflow-hidden">
+  <div class="parallax-container absolute inset-0">
+    <div class="parallax-bg bg-cover bg-center" style={`background-image:url('${image}')`} data-speed="0.3"></div>
+  </div>
+  <div class="absolute inset-0 bg-dark/80"></div>
+  <div class="relative z-10 text-center px-6">
+    <div class="max-w-3xl mx-auto reveal">
+      <span class="text-brand text-xs tracking-[0.3em] uppercase">{eyebrow}</span>
+      <h2 class="font-heading text-4xl lg:text-6xl mt-6 mb-8">{title} <span class="text-brand italic">{accent}</span></h2>
+      <p class="text-muted-text text-lg mb-10">{text}</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href={whatsappLink(message)} target="_blank" rel="noopener" class="group inline-flex items-center gap-3 px-10 py-5 bg-brand text-dark text-sm tracking-[0.15em] uppercase font-medium hover:bg-brand-light transition-all duration-500">
+          Message on WhatsApp
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="/contact" class="px-10 py-5 border border-light-text/30 text-light-text text-sm tracking-[0.15em] uppercase hover:border-brand hover:text-brand transition-all duration-500">
+          Other Ways to Reach Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
