@@ -6,9 +6,8 @@ export const site = {
   owner: 'Moazzam Ali Khokhar',
   city: 'Lahore, Pakistan',
 
-  // TODO: replace with the real WhatsApp number (international format, digits only).
-  whatsappNumber: '923001234567',
-  whatsappDisplay: '+92 300 123 4567',
+  whatsappNumber: '923224348989',
+  whatsappDisplay: '+92 322 434 8989',
 
   instagramHandle: '_makphotos',
   instagramUrl: 'https://www.instagram.com/_makphotos/',
