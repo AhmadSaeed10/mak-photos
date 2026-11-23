@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About | MAK Photos - Moazzam Ali Khokhar">
+
+  <!-- PAGE HERO -->
+  <section class="relative h-[60vh] min-h-[400px] flex items-end overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-dark/30 via-dark/50 to-dark z-10"></div>
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1920&q=80')] bg-cover bg-center bg-fixed"></div>
+    <div class="relative z-20 px-6 lg:px-12 pb-16 max-w-7xl mx-auto w-full">
+      <span class="text-brand text-xs tracking-[0.3em] uppercase reveal">Our Story</span>
+      <h1 class="font-heading text-5xl lg:text-7xl mt-4 reveal" style="transition-delay:0.2s">
+        About <span class="text-brand italic">MAK Photos</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- FOUNDER STORY -->
+  <section class="py-24 lg:py-40 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+      <!-- Image Column -->
+      <div class="reveal-left">
+        <div class="relative">
+          <div class="img-zoom aspect-[3/4] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Moazzam Ali Khokhar" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="absolute -bottom-6 -right-6 w-48 h-48 border border-brand/20"></div>
+          <div class="absolute -top-6 -left-6 w-24 h-24 bg-brand/10"></div>
+        </div>
+      </div>
+
+      <!-- Content Column -->
+      <div class="reveal-right">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">The Founder</span>
+        <h2 class="font-heading text-4xl lg:text-5xl mt-4 mb-8 leading-tight">
+          Moazzam Ali<br/><span class="text-brand italic">Khokhar</span>
+        </h2>
+
+        <div class="space-y-5 text-muted-text leading-relaxed">
+          <p>
+            Photography isn't just a profession for Moazzam Ali Khokhar. It's a calling that courses through every aspect of his life. From the vibrant streets of Lahore to the serene valleys of Leepa, his camera has been his constant companion in a journey to capture the soul of every moment.
+          </p>
+          <p>
+            As the official photographer at the <strong class="text-light-text">Walled City of Lahore Authority</strong>, Moazzam has had the extraordinary privilege of documenting Pakistan's most treasured heritage sites. The Lahore Fort, Shalamar Bagh, and the ancient streets of the Walled City have all been subjects of his passionate lens, preserving their beauty for generations to come.
+          </p>
+          <p>
+            But his vision extends far beyond heritage documentation. As a <strong class="text-light-text">Graphics Designer, Visualizer, Photo Journalist, Fashion Photographer, and Wedding Photographer</strong>, Moazzam brings a rare versatility and depth to every project. Whether capturing a bride's first smile, an editorial fashion moment, or the grandeur of a Mughal-era monument, his work reflects an unwavering dedication to visual storytelling.
+          </p>
+          <p>
+            His portfolio speaks to a career defined by passion, not just skill. Having covered celebrity events, including work with renowned artist <strong class="text-light-text">Ali Zafar</strong>, and documented countless weddings with names like Bunny & Sahar, Naina, and Gul E Hina Khan, Moazzam has built a reputation as one of Lahore's most versatile and sought-after visual artists.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSION QUOTE -->
+  <section class="py-20 px-6 lg:px-12 bg-dark-card border-y border-dark-border">
+    <div class="max-w-4xl mx-auto text-center reveal">
+      <svg class="w-12 h-12 text-brand/30 mx-auto mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151C7.563 6.068 6 8.789 6 11h4v10H0z"/></svg>
+      <blockquote class="font-heading text-2xl lg:text-4xl italic leading-relaxed text-light-text">
+        Every photograph is a conversation between the moment and the photographer. My goal is to make that conversation <span class="text-brand">unforgettable</span>.
+      </blockquote>
+      <p class="mt-6 text-brand text-sm tracking-widest uppercase">Moazzam Ali Khokhar</p>
+    </div>
+  </section>
+
+  <!-- SKILLS & EXPERTISE -->
+  <section class="py-24 lg:py-40 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20 reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">What We Bring</span>
+        <h2 class="font-heading text-4xl lg:text-5xl mt-4">Skills & <span class="text-brand italic">Expertise</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
+        {[
+          { title: "Wedding Photography", level: 95, desc: "Full coverage from Mehndi to Walima with cinematic and candid styles" },
+          { title: "Fashion & Editorial", level: 90, desc: "High-end fashion shoots for brands, catalogs, and editorial features" },
+          { title: "Photo Journalism", level: 88, desc: "Documentary and event coverage with storytelling at its core" },
+          { title: "Cinematic Videography", level: 85, desc: "Wedding films and promotional videos with cinematic color grading" },
+          { title: "Heritage Documentation", level: 92, desc: "Architectural and cultural photography for preservation" },
+          { title: "Graphic Design & Visualization", level: 80, desc: "Visual design, branding, and creative direction for projects" },
+        ].map(skill => (
+          <div class="p-8 bg-dark-card border border-dark-border hover:border-brand/30 transition-all duration-500">
+            <h3 class="font-heading text-lg mb-2">{skill.title}</h3>
+            <p class="text-xs text-muted-text mb-4">{skill.desc}</p>
+            <div class="w-full h-1 bg-dark-surface rounded-full overflow-hidden">
+              <div class="h-full bg-brand rounded-full transition-all duration-1000 ease-out" style={`width: ${skill.level}%`}></div>
+            </div>
+            <span class="text-brand text-xs mt-2 inline-block">{skill.level}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY TIMELINE -->
+  <section class="py-24 lg:py-40 px-6 lg:px-12 bg-dark-card">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-20 reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">The Journey</span>
+        <h2 class="font-heading text-4xl lg:text-5xl mt-4">How It <span class="text-brand italic">Started</span></h2>
+      </div>
+
+      <div class="relative">
+        <!-- Timeline line -->
+        <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-dark-border md:-translate-x-px"></div>
+
+        {[
+          { year: "Early Days", title: "The Spark of Passion", desc: "What started as a fascination with capturing light and shadow grew into a full-blown love affair with photography. Armed with his first camera, Moazzam began exploring the streets of Lahore." },
+          { year: "Foundation", title: "Building the Craft", desc: "Years of dedicated practice, workshops, and mentorship honed his skills across multiple genres. From portraits to landscapes, he mastered the art of seeing the extraordinary in the ordinary." },
+          { year: "Walled City", title: "Heritage & Culture", desc: "Joining the Walled City of Lahore Authority marked a turning point. Documenting UNESCO heritage sites like Lahore Fort and Shalamar Bagh gave his work historical significance and global recognition." },
+          { year: "MAK Photos", title: "Professional Studio", desc: "Launching MAK Photos brought together all his passions under one brand. Weddings, fashion, events, and heritage photography, each elevated by years of diverse experience and an unshakeable enthusiasm for the craft." },
+        ].map((item, i) => (
+          <div class={`relative pl-8 md:pl-0 pb-16 last:pb-0 md:w-1/2 ${i % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto'} reveal`}>
+            <div class={`absolute top-1 ${i % 2 === 0 ? 'left-0 md:left-auto md:right-0 md:translate-x-1/2' : 'left-0 md:-translate-x-1/2'} w-3 h-3 bg-brand rounded-full`}></div>
+            <span class="text-brand text-xs tracking-[0.3em] uppercase">{item.year}</span>
+            <h3 class="font-heading text-xl mt-2 mb-3">{item.title}</h3>
+            <p class="text-sm text-muted-text leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS / WALLED CITY -->
+  <section class="py-24 lg:py-40 px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="text-brand text-xs tracking-[0.3em] uppercase">Heritage Work</span>
+        <h2 class="font-heading text-4xl lg:text-5xl mt-4">The Walled City <span class="text-brand italic">Legacy</span></h2>
+        <p class="text-muted-text mt-6 max-w-2xl mx-auto">As the photographer at the Walled City of Lahore Authority, Moazzam documents Pakistan's most iconic heritage sites, preserving centuries of history through his lens.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 stagger-children">
+        {[
+          { src: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80", title: "Lahore Fort", desc: "UNESCO World Heritage Site" },
+          { src: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80", title: "Shalamar Bagh", desc: "Mughal-era Garden Complex" },
+          { src: "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80", title: "Walled City Streets", desc: "Living Heritage of Lahore" },
+        ].map(place => (
+          <div class="group relative img-zoom aspect-[4/5] overflow-hidden cursor-pointer">
+            <img src={place.src} alt={place.title} class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/20 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+              <h3 class="font-heading text-xl">{place.title}</h3>
+              <p class="text-brand text-xs tracking-wider uppercase mt-1">{place.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="py-20 px-6 lg:px-12 bg-dark-card border-y border-dark-border">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 text-center stagger-children">
+      {[
+        { value: "500", suffix: "+", label: "Projects Completed" },
+        { value: "200", suffix: "+", label: "Happy Clients" },
+        { value: "5", suffix: "+", label: "Years of Experience" },
+        { value: "50", suffix: "K+", label: "Photos Delivered" },
+      ].map(stat => (
+        <div>
+          <span class="font-heading text-4xl lg:text-5xl text-brand counter" data-target={stat.value} data-suffix={stat.suffix}>0</span>
+          <span class="block text-xs text-muted-text tracking-wider uppercase mt-2">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 lg:py-32 px-6 lg:px-12 text-center">
+    <div class="max-w-3xl mx-auto reveal">
+      <span class="text-brand text-xs tracking-[0.3em] uppercase">Ready to Work Together?</span>
+      <h2 class="font-heading text-4xl lg:text-5xl mt-4 mb-8">Let's Create Something <span class="text-brand italic">Beautiful</span></h2>
+      <a href="/contact" class="group inline-flex items-center gap-3 px-10 py-5 bg-brand text-dark text-sm tracking-[0.15em] uppercase font-medium hover:bg-brand-light transition-all duration-500">
+        Get In Touch
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </section>
+
+</Layout>
