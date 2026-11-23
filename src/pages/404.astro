@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Page Not Found | MAK Photos">
+  <section class="min-h-[80vh] flex items-center justify-center px-6 text-center">
+    <div>
+      <span class="text-brand text-xs tracking-[0.3em] uppercase">Error 404</span>
+      <h1 class="font-heading text-5xl lg:text-7xl mt-4">Out of <span class="text-brand italic">frame</span></h1>
+      <p class="text-muted-text mt-6 max-w-md mx-auto">The page you're looking for has moved or never existed.</p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="px-8 py-4 bg-brand text-dark text-xs tracking-[0.2em] uppercase font-medium hover:bg-brand-light transition-all duration-500">Back Home</a>
+        <a href="/portfolio" class="px-8 py-4 border border-brand text-brand text-xs tracking-[0.2em] uppercase hover:bg-brand hover:text-dark transition-all duration-500">View Portfolio</a>
+      </div>
+    </div>
+  </section>
+</Layout>

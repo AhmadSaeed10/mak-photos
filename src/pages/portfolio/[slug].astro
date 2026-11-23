@@ -5,15 +5,13 @@ import CtaBand from '../../components/CtaBand.astro';
 import Gallery from '../../components/Gallery.astro';
 import InstagramEmbeds from '../../components/InstagramEmbeds.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { projects, type Project } from '../../data/portfolio';
+import { projects } from '../../data/portfolio';
 import { categoryLabels, serviceForCategory } from '../../data/services';
 import { site } from '../../data/site';
 
-export function getStaticPaths() {
-  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
-}
-
-const { project } = Astro.props as { project: Project };
+// Rendered on request: resolve the project from the URL.
+const project = projects.find((p) => p.slug === Astro.params.slug);
+if (!project) return Astro.rewrite('/404');
 const service = serviceForCategory(project.category);
 const idx = projects.findIndex((p) => p.slug === project.slug);
 const prev = projects[(idx - 1 + projects.length) % projects.length];

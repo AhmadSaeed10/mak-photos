@@ -4,16 +4,14 @@ import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import FaqList from '../../components/FaqList.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { services, type Service } from '../../data/services';
+import { services } from '../../data/services';
 import { projectsByCategory } from '../../data/portfolio';
 import { packageGroups, formatPrice } from '../../data/packages';
 import { whatsappLink } from '../../data/site';
 
-export function getStaticPaths() {
-  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
-}
-
-const { service } = Astro.props as { service: Service };
+// Rendered on request: resolve the service from the URL.
+const service = services.find((s) => s.slug === Astro.params.slug);
+if (!service) return Astro.rewrite('/404');
 const work = projectsByCategory(service.category).slice(0, 3);
 const group = packageGroups.find((g) => g.serviceSlug === service.slug);
 const idx = services.findIndex((s) => s.slug === service.slug);
